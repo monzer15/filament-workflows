@@ -34,16 +34,6 @@ php artisan vendor:publish --tag=workflows-config
 php artisan migrate
 ```
 
-### ⚡ Publish Configuration
-```bash
-php artisan vendor:publish --tag=workflows-config
-```
-
-### 📊 Migrate Database
-```bash
-php artisan migrate
-```
-
 ### 🔧 Registering the Plugin
 Users must manually register the plugin in their `PanelProvider.php`:
 ```php
@@ -68,6 +58,10 @@ class Order extends Model
     use TrackWorkflowModelEvents;
 }
 ```
+
+## NOTE:
+
+You need to run php artisan schedule:work command to run the workflows.
 
 ## 🔧 Configuration
 
