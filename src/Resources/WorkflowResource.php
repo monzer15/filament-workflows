@@ -419,7 +419,10 @@ class WorkflowResource extends Resource
                                     ];
                                 })
                                 ->createOptionUsing(function ($data) {
-                                    $data['team_id'] = filament()->getTenant()?->id;
+                                    $id = filament()->getTenant()?->id;
+                                    if(filled($id)){
+                                        $data['team_id'] = $id;
+                                    }
                                     $model = FilamentWorkflows\Models\WorkflowGroup::create($data);
                                     return $model->id;
                                 })
