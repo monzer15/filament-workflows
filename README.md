@@ -24,9 +24,14 @@ Ensure your Laravel application meets the following requirements:
 composer require vendor/filament-workflows
 ```
 
-### ⚡ Publish Configuration
+### ⚡ Publish Migration
 ```bash
-php artisan vendor:publish --tag=workflows-config
+php artisan vendor:publish --provider="Monzer\FilamentWorkflows\FilamentWorkflowsServiceProvider" --tag="migrations"
+```
+
+### ⚡ Publish Configuration (Optional)
+```bash
+php artisan vendor:publish --provider="Monzer\FilamentWorkflows\FilamentWorkflowsServiceProvider" --tag="config"
 ```
 
 ### 📊 Migrate Database
