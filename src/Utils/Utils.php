@@ -166,6 +166,8 @@ class Utils
 
     public static function listEvents($asSelect = true): array
     {
+        if(!file_exists(scandir(app_path() . "/Events")))
+         return [];
         $data = [];
         $classes = [];
         foreach (scandir(app_path() . "/Events") as $file) {
