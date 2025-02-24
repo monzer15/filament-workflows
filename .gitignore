@@ -21,3 +21,10 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+.idea/codeception.xml
+.idea/filament-workflows.iml
+.idea/modules.xml
+.idea/php.xml
+.idea/phpspec.xml
+.idea/phpunit.xml
+.idea/vcs.xml
