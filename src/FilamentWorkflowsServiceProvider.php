@@ -16,21 +16,22 @@ class FilamentWorkflowsServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        //discover views
-//        php artisan vendor:publish --provider="Monzer\FilamentWorkflows\FilamentWorkflowsServiceProvider" --tag="migrations"
-        $this ->loadViewsFrom(__DIR__ . '/../resources/views', 'filament-workflows');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'filament-workflows');
 
-        //Publish Migrations
         $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ], 'migrations');
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'migrations');
 
-        // Publish configuration file
         $this->publishes([
             __DIR__ . '/../config/workflows.php' => config_path('workflows.php'),
         ], 'config');
 
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'filament-workflows');
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/workflows.php',
+            'workflows'
+        );
     }
 
     public function boot()

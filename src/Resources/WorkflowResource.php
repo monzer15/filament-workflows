@@ -2,7 +2,6 @@
 
 namespace Monzer\FilamentWorkflows\Resources;
 
-use App\Rules\UniqueTenantItemRule;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\MaxWidth;
@@ -415,8 +414,7 @@ class WorkflowResource extends Resource
                                     return [
                                         Forms\Components\Section::make()->schema([
                                             TextInput::make('name')
-                                                ->required()
-                                                ->rules([new UniqueTenantItemRule(FilamentWorkflows\Models\WorkflowGroup::class, 'name', $form->getRecord()?->id)])
+                                                ->required(),
                                         ])
                                     ];
                                 })

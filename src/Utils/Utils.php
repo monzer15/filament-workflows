@@ -19,7 +19,9 @@ class Utils
 
     public static function getActions(): array
     {
-        return filament('filament-workflows')->getActions();
+        $runtime_actions = filament('filament-workflows')->getActions();
+        $default_actions = config('workflows.actions');
+        return array_unique(array_merge($default_actions, $runtime_actions));
     }
 
     public static function getActionsForSelect(): array
