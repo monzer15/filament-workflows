@@ -115,6 +115,7 @@ class Utils
         }
         return $notifiableRelations;
     }
+
     protected static function getModelRelations(Model $model): array
     {
         $relations = [];
@@ -149,6 +150,7 @@ class Utils
 
         return $relations;
     }
+
     public static function listTriggers($asSelect = true): array
     {
         $data = [];
@@ -166,8 +168,8 @@ class Utils
 
     public static function listEvents($asSelect = true): array
     {
-        if(!file_exists(scandir(app_path() . "/Events")))
-         return [];
+        if (!file_exists(app_path() . "/Events"))
+            return [];
         $data = [];
         $classes = [];
         foreach (scandir(app_path() . "/Events") as $file) {
@@ -271,6 +273,7 @@ class Utils
         }
         return $data;
     }
+
     public static function processMagicAttributes(Action $action, Model $model, array $data): array
     {
         $magicAttributeFields = $action->getMagicAttributeFields();
@@ -399,9 +402,9 @@ class Utils
     {
         $data = [];
         foreach ($components as $component) {
-            if(count($component->getChildComponents()) > 0) {
+            if (count($component->getChildComponents()) > 0) {
                 $data = array_merge($data, self::extractComponents($component->getChildComponents()));
-            }else{
+            } else {
                 $data[] = $component;
             }
         }
