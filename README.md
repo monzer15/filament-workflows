@@ -30,7 +30,7 @@ Ensure your Laravel application meets the following requirements:
 ### 📥 Install the Package
 
 ```bash
-composer require vendor/filament-workflows
+composer require monzer/filament-workflows
 ```
 
 ### ⚡ Publish Migration
