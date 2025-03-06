@@ -170,8 +170,6 @@ class Utils
 
     public static function listEvents($asSelect = true): array
     {
-        if (!file_exists(app_path() . "/Events"))
-            return [];
         $data = [];
         $classes = [];
         foreach (scandir(app_path() . "/Events") as $file) {
@@ -195,19 +193,52 @@ class Utils
     public static function listModelsThatUses($trait): array
     {
         $classes = [];
-        foreach (scandir(app_path() . "/Models") as $file) {
-            if (Str::endsWith($file, '.php')) {
-                $class = "App/Models/$file";
-                $class = Str::replace(['../', '.php'], '', $class);
-                $class = Str::replace(['/'], "\\", $class);
-                if (in_array($trait, class_uses_recursive($class))) {
-                    $classes[] = $class;
-                }
+        $modelDirectories = config('workflows.models_directory', ['App\\Models']);
+
+        foreach ($modelDirectories as $directory) {
+            // Convert namespace to directory path
+            $directoryPath = str_replace('\\', '/', $directory);
+            $directoryPath = app_path() . '/' . str_replace('App/', '', $directoryPath);
+
+            if (!is_dir($directoryPath)) {
+                continue;
             }
+
+            $classes = array_merge($classes, self::scanDirectoryRecursively($directoryPath, $directory, $trait));
         }
+
         return $classes;
     }
 
+    private static function scanDirectoryRecursively($directoryPath, $namespace, $trait): array
+    {
+        $classes = [];
+
+        foreach (scandir($directoryPath) as $item) {
+            // Skip dot directories
+            if ($item === '.' || $item === '..') {
+                continue;
+            }
+
+            $fullPath = $directoryPath . '/' . $item;
+
+            // If it's a directory, recursively scan it
+            if (is_dir($fullPath)) {
+                $subNamespace = $namespace . '\\' . $item;
+                $classes = array_merge($classes, self::scanDirectoryRecursively($fullPath, $subNamespace, $trait));
+            }
+            // If it's a PHP file, check if it uses the trait
+            elseif (Str::endsWith($item, '.php')) {
+                $className = $namespace . '\\' . basename($item, '.php');
+
+                if (class_exists($className) && in_array($trait, class_uses_recursive($className))) {
+                    $classes[] = $className;
+                }
+            }
+        }
+
+        return $classes;
+    }
     public static function getTriggerAttributes($trigger_class, $asSelect = true, $withMutated = false): array
     {
         $model = new ($trigger_class);

@@ -13,6 +13,10 @@ return [
         \Monzer\FilamentWorkflows\Actions\SendWhatsAppMessageViaWassenger::class,
         \Monzer\FilamentWorkflows\Actions\SendTelegramMessage::class
     ],
+    //scan the following directories for models
+    'models_directory' => [
+        'App\\Models',
+    ],
     'services' => [
         'firebase' => [
             'server_key' => env('FIREBASE_SERVER_KEY'),
