@@ -57,7 +57,7 @@ Users must manually register the plugin in their `PanelProvider.php`:
 
 ```php
 use Filament\Facades\Filament;
-use Vendor\FilamentWorkflows\WorkflowsPlugin;
+use Monzer\FilamentWorkflows\WorkflowsPlugin;
 
 public function panel(Panel $panel): Panel
 {
@@ -237,7 +237,7 @@ Then add your custom action
 
 ```php
 use Filament\Facades\Filament;
-use Vendor\FilamentWorkflows\WorkflowsPlugin;
+use Monzer\FilamentWorkflows\WorkflowsPlugin;
 
 public function panel(Panel $panel): Panel
 {
@@ -329,7 +329,7 @@ Then, add the middleware to the panel
 
 ```php
 use Filament\Facades\Filament;
-use Vendor\FilamentWorkflows\WorkflowsPlugin;
+use Monzer\FilamentWorkflows\WorkflowsPlugin;
 
 public function panel(Panel $panel): Panel
 {
@@ -349,7 +349,7 @@ tests to ensure workflow stability and execution accuracy.
 
 ## ❤️ Support & Contributions
 
-For issues and feature requests, please visit the [GitHub repository](https://github.com/vendor/filament-workflows) and
+For issues and feature requests, please visit the [GitHub repository](https://github.com/monzer15/filament-workflows) and
 create an issue.
 
 Pull requests are welcome. Make sure to follow the contribution guidelines.
