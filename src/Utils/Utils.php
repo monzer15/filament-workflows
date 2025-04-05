@@ -168,8 +168,11 @@ class Utils
         return $data;
     }
 
-    public static function listEvents($asSelect = true): array
+    public static function listEvents($forSelect = true): array
     {
+        if (!file_exists(app_path() . "/Events"))
+            return [];
+
         $data = [];
         $classes = [];
         foreach (scandir(app_path() . "/Events") as $file) {
@@ -180,13 +183,15 @@ class Utils
                 $classes[] = $class;
             }
         }
-        if ($asSelect) {
-            foreach ($classes as $class) {
-                $data[$class] = str(class_basename($class))->kebab()->replace('-', ' ')->title()->value();
-            }
-        } else {
-            $data = $classes;
+
+        if (!$forSelect) {
+            return $classes;
         }
+
+        foreach ($classes as $class) {
+            $data[$class] = str(class_basename($class))->kebab()->replace('-', ' ')->title()->value();
+        }
+
         return $data;
     }
 
