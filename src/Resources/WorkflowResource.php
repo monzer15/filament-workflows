@@ -321,6 +321,14 @@ class WorkflowResource extends Resource
                                         ->hiddenLabel()
                                         ->required()
                                         ->live()
+                                        ->disableOptionWhen(function (Forms\Get $get, $value) {
+                                            return match ($get('../../type')) {
+                                                'scheduled' => !Utils::getAction($value)->canBeUsedWithScheduledWorkflows(),
+                                                'model_event' => !Utils::getAction($value)->canBeUsedWithRecordEventWorkflows(),
+                                                'custom_event' => !Utils::getAction($value)->canBeUsedWithCustomEventWorkflows(),
+                                                default => false,
+                                            };
+                                        })
                                         ->suffixAction(
                                             Forms\Components\Actions\Action::make('config_action')
                                                 ->disabled(fn($context) => $context === "view")
