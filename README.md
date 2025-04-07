@@ -17,6 +17,12 @@ tasks. The package integrates seamlessly with FilamentPHP, offering a Filament R
 - ✨ **Magic Attributes** enable dynamic replacement of placeholders with model attributes or event data, allowing
   seamless data binding and automation within the system.
 
+## Screenshots
+
+![Create workflow](art/1.png)
+![Action 1](art/2.png)
+![Action 2](art/3.png)
+
 ## ⚙️ Installation & Setup
 
 ### 🖥️ Requirements
