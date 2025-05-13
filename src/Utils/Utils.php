@@ -324,7 +324,9 @@ class Utils
                 if (is_array($value)) {
                     $arr_data = [];
                     foreach ($value as $k => $subValue) {
-                        $arr_data[$k] = self::processMagicAttribute($model, $subValue);
+                        if (is_string($subValue)) {
+                            $arr_data[$k] = self::processMagicAttribute($model, $subValue);
+                        }
                     }
                     $data[$key] = $arr_data;
 
