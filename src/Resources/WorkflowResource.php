@@ -337,6 +337,7 @@ class WorkflowResource extends Resource
                                                 ->visible(fn(Forms\Get $get) => filled($get('action')))
                                                 ->stickyModalHeader()
                                                 ->stickyModalFooter()
+                                                ->modalWidth(MaxWidth::SevenExtraLarge)
                                                 ->mountUsing(function (Form $form, Forms\Get $get, $state) {
                                                     $form->fill();
                                                     foreach (Utils::extractComponents($form->getComponents(withHidden: true)) as $component) {
