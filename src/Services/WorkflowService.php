@@ -51,7 +51,7 @@ class WorkflowService
             switch ($condition->operator) {
                 case "is-equal-to":
                 {
-                    $conditions_results[] = $attribute instanceof Carbon ? $attribute->equalTo($condition->compare_value) : $condition == $condition->compare_value;
+                    $conditions_results[] = $attribute instanceof Carbon ? $attribute->equalTo($condition->compare_value) : $attribute == $condition->compare_value;
                     break;
                 }
                 case "is-not-equal-to":
