@@ -638,4 +638,9 @@ class WorkflowResource extends Resource
             'viewLogs' => Pages\ViewLogs::route('/{record}/view-logs'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return filament(app(FilamentWorkflows\WorkflowsPlugin::class)->getId())->isAuthorized();
+    }
 }
