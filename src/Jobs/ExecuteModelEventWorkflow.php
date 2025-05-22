@@ -11,7 +11,7 @@ use Monzer\FilamentWorkflows\Models\Workflow;
 use Monzer\FilamentWorkflows\Models\WorkflowAction;
 use Monzer\FilamentWorkflows\Models\WorkflowActionExecution;
 use Monzer\FilamentWorkflows\Services\WorkflowService;
-use Monzer\FilamentWorkflows\utils\Utils;
+use Monzer\FilamentWorkflows\Utils\Utils;
 
 class ExecuteModelEventWorkflow implements ShouldQueue
 {
