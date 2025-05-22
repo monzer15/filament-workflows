@@ -4,10 +4,15 @@ namespace Monzer\FilamentWorkflows;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Support\Concerns\EvaluatesClosures;
 use Monzer\FilamentWorkflows\Resources\WorkflowResource;
 
 class WorkflowsPlugin implements Plugin
 {
+    use EvaluatesClosures;
+
+    protected bool|\Closure $authorizeUsing = true;
+
     protected array $actions = [];
     protected int $navigation_sort = 100;
     protected ?string $navigation_group = null;
@@ -117,5 +122,17 @@ class WorkflowsPlugin implements Plugin
     public function boot(Panel $panel): void
     {
         // TODO: Implement boot() method.
+    }
+
+    public function authorize(bool|\Closure $callback = true): static
+    {
+        $this->authorizeUsing = $callback;
+
+        return $this;
+    }
+
+    public function isAuthorized(): bool
+    {
+        return $this->evaluate($this->authorizeUsing) === true;
     }
 }
