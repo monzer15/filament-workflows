@@ -85,6 +85,46 @@ class Order extends Model
 }
 ```
 
+To change the model display name you can use the getModelName() static function:
+
+```php
+use Monzer\FilamentWorkflows\Traits\TrackWorkflowModelEvents;
+
+class Order extends Model
+{
+    use TrackWorkflowModelEvents;
+
+    public static function getModelName(): string
+    {
+        return __("order.plural"); //for example 
+    }
+}
+```
+
+To change the attributes display name you can use the getAttributeName() static function:
+
+```php
+use Monzer\FilamentWorkflows\Traits\TrackWorkflowModelEvents;
+
+class Order extends Model
+{
+    use TrackWorkflowModelEvents;
+
+    public static function getAttributeName(string $attribute): ?string
+    {
+        switch ($attribute) {
+            case 'id':
+                return __("order.fields.id");
+            case 'type':
+                return __("order.fields.type");
+            //... extra 
+            default:
+                return null;
+        }
+    }
+}
+```
+
 ## NOTE:
 
 You need to run php artisan schedule:work command to run the workflows.
