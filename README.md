@@ -129,7 +129,69 @@ return [
             'from' => env('TWILIO_FROM'),
         ],
     ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Maximum Log Entries
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the maximum number of log entries to keep for
+    | each workflow. When this limit is exceeded, older entries will be
+    | automatically removed to prevent database overflow. Set to null to
+    | disable log rotation (not recommended for production).
+    |
+    */
+    'max_log_entries' => env('WORKFLOWS_MAX_LOG_ENTRIES', 100),
 ];
+```
+
+## 📝 Log Management
+
+### Automatic Log Rotation
+
+Starting from version 0.3.0, this package includes automatic log rotation to prevent database overflow. By default, only the last 100 log entries are kept for each workflow.
+
+#### Configuration
+
+You can customize the maximum number of log entries by setting the `WORKFLOWS_MAX_LOG_ENTRIES` environment variable:
+
+```env
+WORKFLOWS_MAX_LOG_ENTRIES=200
+```
+
+Or modify it directly in the config file:
+
+```php
+'max_log_entries' => 200, // Keep last 200 entries
+```
+
+To disable log rotation (not recommended):
+
+```php
+'max_log_entries' => null, // Disable rotation
+```
+
+### Cleaning Up Existing Logs
+
+If you have existing workflows with large log histories, you can clean them up using the provided artisan command:
+
+```bash
+# Clean up logs using the configured limit
+php artisan workflows:cleanup-logs
+
+# Clean up logs with a custom limit
+php artisan workflows:cleanup-logs --limit=50
+
+# Preview what would be cleaned without making changes
+php artisan workflows:cleanup-logs --dry-run
+```
+
+### Database Migration for Large Logs
+
+For existing installations that experience database errors due to large logs, run the optional migration to increase column size:
+
+```bash
+php artisan migrate --path=vendor/monzer/filament-workflows/database/migrations/2024_01_01_000000_update_workflows_logs_column_size.php
 ```
 
 ## 🪄 Magic Attributes
