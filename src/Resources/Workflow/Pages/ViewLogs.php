@@ -1,24 +1,25 @@
 <?php
 
-namespace Monzer\FilamentWorkflows\Resources\WorkflowResource\Pages;
+namespace Monzer\FilamentWorkflows\Resources\Workflow\Pages;
 
-use Monzer\FilamentWorkflows\Resources\WorkflowResource;
-use Filament\Forms\Components\Section;
-use Monzer\FilamentWorkflows\Models\Workflow;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Resources\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
+use Monzer\FilamentWorkflows\Models\Workflow;
+use Monzer\FilamentWorkflows\Resources\Workflow\WorkflowResource;
+use Route;
 
 class ViewLogs extends Page implements HasForms
 {
     protected static string $resource = WorkflowResource::class;
 
-    protected static string $view = 'filament-workflows::view-logs';
+    protected string $view = 'filament-workflows::view-logs';
 
     public Workflow $record;
-    public string $logs, $execution_logs;
+    public string   $logs, $execution_logs;
 
     public function getHeading(): string|Htmlable
     {
@@ -28,29 +29,31 @@ class ViewLogs extends Page implements HasForms
     public function getSubheading(): string|Htmlable|null
     {
         $sub_heading = "#" . $this->record->description;
-        $actions = implode(', ', str_replace('-', ' ', $this->record->actions->pluck('action')->toArray()));;
+        $actions     = implode(', ', str_replace('-', ' ', $this->record->actions->pluck('action')->toArray()));
         return new HtmlString($sub_heading . "<br> <strong>$actions</strong");
     }
 
 
     public function mount()
     {
-        $this->record = \Route::current()->parameter('record');
-        $logs = $this->record->logs ?? [];
+        $this->record  = Route::current()->parameter('record');
+        $logs          = $this->record->logs ?? [];
         $executionLogs = $this->record->executions->pluck('logs')->flatten()->toArray();
 
-        $logs = array_filter($logs);
+        $logs          = array_filter($logs);
         $executionLogs = array_filter($executionLogs);
 
-        $this->logs = implode("\n\n", $logs);
+        $this->logs           = implode("\n\n", $logs);
         $this->execution_logs = implode("\n\n", $executionLogs);
 
 
-        if (empty($this->logs))
+        if (empty($this->logs)) {
             $this->logs = "No logs yet.";
+        }
 
-        if (empty($this->execution_logs))
+        if (empty($this->execution_logs)) {
             $this->execution_logs = "No logs yet.";
+        }
 
     }
 
@@ -59,18 +62,18 @@ class ViewLogs extends Page implements HasForms
         return [
             Section::make([
                 Textarea::make('logs')
-                    ->rows(10)
-                    ->cols(10)
-                    ->id('logs')
-                    ->extraInputAttributes(['style' => 'color:#2a3ec5;'])
-                    ->readOnly(),
+                        ->rows(10)
+                        ->cols(10)
+                        ->id('logs')
+                        ->extraInputAttributes(['style' => 'color:#2a3ec5;'])
+                        ->readOnly(),
 
                 Textarea::make('execution_logs')
-                    ->rows(10)
-                    ->cols(10)
-                    ->id('execution_logs')
-                    ->extraInputAttributes(['style' => 'color:#2a3ec5;'])
-                    ->readOnly(),
+                        ->rows(10)
+                        ->cols(10)
+                        ->id('execution_logs')
+                        ->extraInputAttributes(['style' => 'color:#2a3ec5;'])
+                        ->readOnly(),
             ])
         ];
     }

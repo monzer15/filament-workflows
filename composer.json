@@ -8,7 +8,7 @@
     ],
     "type": "library",
     "license": "MIT",
-    "version": "0.2.3",
+    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "Monzer\\FilamentWorkflows\\": "src"
@@ -21,7 +21,7 @@
         }
     ],
     "require": {
-        "filament/support": "^3.0"
+        "filament/support": "^4.0"
     },
     "extra": {
         "laravel": {
@@ -30,6 +30,6 @@
             ]
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

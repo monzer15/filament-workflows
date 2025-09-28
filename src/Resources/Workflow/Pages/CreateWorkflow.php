@@ -1,11 +1,11 @@
 <?php
 
-namespace Monzer\FilamentWorkflows\Resources\WorkflowResource\Pages;
+namespace Monzer\FilamentWorkflows\Resources\Workflow\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Validation\ValidationException;
-use Monzer\FilamentWorkflows\Resources\WorkflowResource;
+use Monzer\FilamentWorkflows\Resources\Workflow\WorkflowResource;
 
 class CreateWorkflow extends CreateRecord
 {
@@ -14,8 +14,8 @@ class CreateWorkflow extends CreateRecord
     protected function onValidationError(ValidationException $exception): void
     {
         Notification::make()
-            ->title($exception->getMessage())
-            ->danger()
-            ->send();
+                    ->title($exception->getMessage())
+                    ->danger()
+                    ->send();
     }
 }

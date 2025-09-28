@@ -2,12 +2,15 @@
 
 namespace Monzer\FilamentWorkflows\Actions;
 
+use Filament\Forms;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 use Monzer\FilamentWorkflows\Contracts\Action;
 use Monzer\FilamentWorkflows\Models\WorkflowActionExecution;
+use function __;
 
 class SendWebhook extends Action
 {
@@ -59,9 +62,9 @@ class SendWebhook extends Action
         try {
 
             if ($data['method'] === 'post') {
-                $response = \Http::post($data['endpoint'], $endpoint_data);
+                $response = Http::post($data['endpoint'], $endpoint_data);
             } else {
-                $response = \Http::get($data['endpoint'], $endpoint_data);
+                $response = Http::get($data['endpoint'], $endpoint_data);
             }
 
             if ($response->successful()) {

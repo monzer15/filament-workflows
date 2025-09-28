@@ -2,13 +2,14 @@
 
 namespace Monzer\FilamentWorkflows\Actions;
 
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Monzer\FilamentWorkflows\Contracts\Action;
 use Monzer\FilamentWorkflows\Models\WorkflowActionExecution;
 use Monzer\FilamentWorkflows\Utils\Utils;
+use Twilio\Rest\Client;
 
 class SendSmsViaTwilio extends Action
 {
@@ -27,31 +28,36 @@ class SendSmsViaTwilio extends Action
         return [
             Section::make()->schema([
                 TextInput::make('data.sid')
-                    ->default(config('workflows.services.twilio.sid'))
-                    ->required(),
+                         ->default(config('workflows.services.twilio.sid'))
+                         ->required(),
 
                 TextInput::make('data.token')
-                    ->default(config('workflows.services.twilio.token'))
-                    ->required(),
+                         ->default(config('workflows.services.twilio.token'))
+                         ->required(),
 
                 TextInput::make('data.from')
-                    ->default(config('workflows.services.twilio.from'))
-                    ->required(),
+                         ->default(config('workflows.services.twilio.from'))
+                         ->required(),
 
                 TextInput::make('data.to')
-                    ->required(),
+                         ->required(),
 
                 Textarea::make('data.body')
-                    ->rows(5)
-                    ->columnSpanFull()
-                    ->required(),
+                        ->rows(5)
+                        ->columnSpanFull()
+                        ->required(),
             ])->columns(2)
         ];
     }
 
-    public function execute(array $data, WorkflowActionExecution $actionExecution, ?Model $model, array $custom_event_data, array &$shared_data): void
-    {
-        $client = new \Twilio\Rest\Client($data['sid'], $data['token']);
+    public function execute(
+        array $data,
+        WorkflowActionExecution $actionExecution,
+        ?Model $model,
+        array $custom_event_data,
+        array &$shared_data
+    ): void {
+        $client = new Client($data['sid'], $data['token']);
         $client->messages->create($data['to'], [
             'from' => $data['from'],
             'body' => $data['body']

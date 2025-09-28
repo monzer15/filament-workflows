@@ -4,7 +4,7 @@ namespace Monzer\FilamentWorkflows\Actions;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Database\Eloquent\Model;
 use Monzer\FilamentWorkflows\Contracts\Action;
 use Monzer\FilamentWorkflows\Models\WorkflowActionExecution;
@@ -27,18 +27,18 @@ class UpdateRecord extends Action
     {
         return [
             Select::make('data.attribute')
-                ->required()
-                ->options(function (Get $get, $livewire) {
-                    $model_type = $livewire->data['model_type'];
-                    if ($model_type) {
-                        return Utils::getTriggerAttributes($model_type, true, true);
-                    }
-                    return [];
-                }),
+                  ->required()
+                  ->options(function (Get $get, $livewire) {
+                      $model_type = $livewire->data['model_type'];
+                      if ($model_type) {
+                          return Utils::getTriggerAttributes($model_type, true, true);
+                      }
+                      return [];
+                  }),
 
             TextInput::make('data.value')
-                ->helperText("Supports magic attributes")
-                ->required(),
+                     ->helperText("Supports magic attributes")
+                     ->required(),
         ];
     }
 
@@ -49,8 +49,13 @@ class UpdateRecord extends Action
         ];
     }
 
-    public function execute(array $data, WorkflowActionExecution $actionExecution, ?Model $model, array $custom_event_data, array &$shared_data): void
-    {
+    public function execute(
+        array $data,
+        WorkflowActionExecution $actionExecution,
+        ?Model $model,
+        array $custom_event_data,
+        array &$shared_data
+    ): void {
         $model->update([$data['attribute'] => $data['value']]);
         $actionExecution->log("Record updated");
     }
@@ -59,6 +64,7 @@ class UpdateRecord extends Action
     {
         return false;
     }
+
     public function canBeUsedWithCustomEventWorkflows(): bool
     {
         return false;
