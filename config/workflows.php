@@ -17,6 +17,20 @@ return [
     'models_directory' => [
         'App\\Models',
     ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Maximum Log Entries
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the maximum number of log entries to keep for
+    | each workflow. When this limit is exceeded, older entries will be
+    | automatically removed to prevent database overflow. Set to null to
+    | disable log rotation (not recommended for production).
+    |
+    */
+    'max_log_entries' => env('WORKFLOWS_MAX_LOG_ENTRIES', 100),
+    
     'services' => [
         'firebase' => [
             'server_key' => env('FIREBASE_SERVER_KEY'),

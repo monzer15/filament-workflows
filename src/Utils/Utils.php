@@ -50,6 +50,14 @@ class Utils
     {
         $logs = $workflow->logs ?? [];
         $logs[] = $log;
+        
+        // Implement log rotation to prevent database overflow
+        $maxLogEntries = config('workflows.max_log_entries', 100);
+        if ($maxLogEntries !== null && count($logs) > $maxLogEntries) {
+            // Keep only the most recent entries
+            $logs = array_slice($logs, -$maxLogEntries);
+        }
+        
         return $workflow->update(['logs' => $logs]);
     }
 

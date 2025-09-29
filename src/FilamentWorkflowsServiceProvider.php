@@ -10,6 +10,7 @@ use Monzer\FilamentWorkflows\Jobs\ExecuteScheduledWorkflow;
 use Monzer\FilamentWorkflows\Listeners\WorkflowEventSubscriber;
 use Monzer\FilamentWorkflows\Models\Workflow;
 use Monzer\FilamentWorkflows\Utils\Utils;
+use Monzer\FilamentWorkflows\Commands\CleanupWorkflowLogs;
 
 class FilamentWorkflowsServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,13 @@ class FilamentWorkflowsServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        // Register console commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CleanupWorkflowLogs::class,
+            ]);
+        }
+        
         $this->app->booted(function () {
 
             if (!Schema::hasTable('workflows'))
