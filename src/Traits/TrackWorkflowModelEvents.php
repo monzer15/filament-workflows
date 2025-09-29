@@ -7,6 +7,16 @@ use Monzer\FilamentWorkflows\Jobs\PrepareModelEventForWorkflow;
 
 trait TrackWorkflowModelEvents
 {
+    public static function getModelName(): string
+    {
+        return str(class_basename(static::class))->kebab()->replace('-', ' ')->title()->value();
+    }
+
+    public static function getAttributeName(string $attribute): ?string
+    {
+        return null;
+    }
+
     public static function bootTrackWorkflowModelEvents()
     {
         static::created(function (Model $model) {

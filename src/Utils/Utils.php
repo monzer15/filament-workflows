@@ -168,7 +168,7 @@ class Utils
 
         if ($asSelect) {
             foreach ($models_that_uses_track_workflow_model_events_trait as $model_class) {
-                $data[$model_class] = str(class_basename($model_class))->kebab()->replace('-', ' ')->title()->value();
+                 $data[$model_class] = $model_class::getModelName();
             }
         } else {
             $data = $models_that_uses_track_workflow_model_events_trait;
@@ -266,8 +266,12 @@ class Utils
         if ($asSelect) {
             $attributes = array_combine(array_values($attributes), array_values($attributes));
             foreach ($attributes as $key => $value) {
-                $mutated = self::isModelAttributeMutated($trigger_class, $key) ? "- " : "";
-                $attributes[$key] = str($mutated . $value)->replace('_', ' ')->ucfirst()->title()->value();
+                if (method_exists($trigger_class, 'getAttributeName') && ($defaultAttributeName = $trigger_class::getAttributeName($key))) {
+                    $attributes[$key] = $defaultAttributeName;
+                } else {
+                    $mutated = self::isModelAttributeMutated($trigger_class, $key) ? "- " : "";
+                    $attributes[$key] = str($mutated . $value)->replace('_', ' ')->ucfirst()->title()->value();
+                }
             }
         }
 
