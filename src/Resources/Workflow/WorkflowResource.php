@@ -722,6 +722,6 @@ class WorkflowResource extends Resource
 
     public static function canAccess(): bool
     {
-        return filament(app(FilamentWorkflows\WorkflowsPlugin::class)->getId())->isAuthorized();
+        return filament(app(Monzer\FilamentWorkflows\WorkflowsPlugin::class)->getId())->isAuthorized();
     }
 }
