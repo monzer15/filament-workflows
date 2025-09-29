@@ -365,10 +365,8 @@ class WorkflowResource extends Resource
                                                     }
                                                     return $action->getFields();
                                                 })
-                                                ->action(function (array $data, Forms\Components\Actions\Action $action, Forms\Set $set): void {
-                                                    foreach ($data['data'] ?? [] as $key => $value) {
-                                                        $set("data.$key", $value);
-                                                    }
+                                                ->action(function (array $data, FilamentWorkflows\Models\WorkflowAction $workflowAction): void {
+                                                    $workflowAction->update($data);
                                                 })
                                         )
                                         ->afterStateUpdated(function ($state, Forms\Set $set) {
@@ -393,12 +391,6 @@ class WorkflowResource extends Resource
                                             }
                                         })
                                         ->options(Utils::getActionsForSelect()),
-
-                                    Forms\Components\Section::make()
-                                        ->columnSpan('hidden')
-                                        ->schema(function (Forms\Get $get) use ($form) {
-                                            return Utils::getAction($get('action'))?->getFields() ?? [];
-                                        }),
                                 ])
                                 ->minItems(1)
                                 ->reorderable()
