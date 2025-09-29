@@ -30,7 +30,7 @@ tasks. The package integrates seamlessly with FilamentPHP, offering a Filament R
 Ensure your Laravel application meets the following requirements:
 
 - Laravel 10+
-- FilamentPHP 3.2
+- FilamentPHP 4+
 - PHP 8.1+
 
 ### 📥 Install the Package
