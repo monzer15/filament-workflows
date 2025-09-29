@@ -38,6 +38,7 @@ use Monzer\FilamentWorkflows\Jobs\ExecuteModelEventWorkflow;
 use Monzer\FilamentWorkflows\Models\Workflow;
 use Monzer\FilamentWorkflows\Models\WorkflowGroup;
 use Monzer\FilamentWorkflows\Utils\Utils;
+use Monzer\FilamentWorkflows\WorkflowsPlugin;
 use Throwable;
 use UnitEnum;
 
@@ -722,6 +723,6 @@ class WorkflowResource extends Resource
 
     public static function canAccess(): bool
     {
-        return filament(app(Monzer\FilamentWorkflows\WorkflowsPlugin::class)->getId())->isAuthorized();
+        return filament(app(WorkflowsPlugin::class)->getId())->isAuthorized();
     }
 }
