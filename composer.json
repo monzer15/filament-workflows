@@ -8,7 +8,7 @@
     ],
     "type": "library",
     "license": "MIT",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "autoload": {
         "psr-4": {
             "Monzer\\FilamentWorkflows\\": "src"
